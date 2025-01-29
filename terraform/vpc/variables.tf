@@ -13,5 +13,5 @@ variable "cidr" {
 variable "name" {
   type        = string
   description = "VPC name"
-  default     = "main"
+  default     = "training-vpc"
 }

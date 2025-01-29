@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "eks-ca"
+  namespace: ingress-nginx
+spec:
+  commonName: "eks-ca"
+  secretName: "eks-ca"
+  duration: 87600h # 3650d
+  renewBefore: 8760h # 365d
+  subject:
+    organizations:
+    - "EKS HOLDINGS LIMITED"
+  usages:
+  - "signing"
+  - "key encipherment"
+  - "cert sign"
+  isCA: true
+  issuerRef:
+    name: "selfsigning-issuer"
+    kind: ClusterIssuer

@@ -1,0 +1,38 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: aws-ebs-csi-driver
+  namespace: kube-system
+spec:
+  interval: 1m0s
+  timeout: 1m0s
+  url: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aws-ebs-csi-driver
+  namespace: kube-system
+spec:
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: aws-ebs-csi-driver
+      sourceRef:
+        kind: HelmRepository
+        name: aws-ebs-csi-driver
+      version: '2.39.1'
+  interval: 1m0s
+  values:
+    controller:
+      serviceAccount:
+        create: true
+        name: ebs-csi-controller-sa
+        annotations:
+          eks.amazonaws.com/role-arn: "arn:aws:iam::178394743802:role/aws-ebs-csi-role-training_eks"

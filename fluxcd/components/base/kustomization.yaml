@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- 02-aws-csi.yaml
+- 03-aws-lb-controller.yaml
+- 04-metrics-server.yaml
+- 05-nginx-ingress-controller.yaml

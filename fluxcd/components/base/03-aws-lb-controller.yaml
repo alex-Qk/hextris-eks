@@ -1,0 +1,38 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: eks-charts
+  namespace: kube-system
+spec:
+  interval: 1m0s
+  timeout: 1m0s
+  url: https://aws.github.io/eks-charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: aws-load-balancer-controller
+  namespace: kube-system
+spec:
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  chart:
+    spec:
+      chart: aws-load-balancer-controller
+      sourceRef:
+        kind: HelmRepository
+        name: eks-charts
+      version: 1.11.0
+  interval: 1m0s
+  values:
+    clusterName: training_eks
+    serviceAccount:
+      create: true
+      name: aws-load-balancer-controller
+      annotations:
+        eks.amazonaws.com/role-arn: "arn:aws:iam::178394743802:role/AmazonEKSLoadBalancerControllerRole"

@@ -24,17 +24,17 @@ module "vpc" {
   manage_default_network_acl = true
 
   public_subnet_tags = {
-    "SubnetType"                     = "Public"
-    "kubernetes.io/cluster/dev_eks"  = "shared"
-    "kubernetes.io/role/alb-ingress" = "1"
-    "kubernetes.io/role/elb"         = "1"
+    "SubnetType"                         = "Public"
+    "kubernetes.io/cluster/training_eks" = "shared"
+    "kubernetes.io/role/alb-ingress"     = "1"
+    "kubernetes.io/role/elb"             = "1"
   }
 
   private_subnet_tags = {
-    "SubnetType"                      = "Private"
-    "kubernetes.io/cluster/dev_eks"   = "shared"
-    "kubernetes.io/role/internal-elb" = "1"
-    "kubernetes.io/role/alb-ingress"  = "1"
+    "SubnetType"                         = "Private"
+    "kubernetes.io/cluster/training_eks" = "shared"
+    "kubernetes.io/role/internal-elb"    = "1"
+    "kubernetes.io/role/alb-ingress"     = "1"
   }
 
   tags = local.tags

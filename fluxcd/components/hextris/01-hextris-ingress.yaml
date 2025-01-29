@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hextris
+  namespace: hextris
+  labels:
+    app: hextris
+spec:
+  tls:
+    - hosts:
+      - hextris.alexandertsvetkov.com
+      secretName: hextris-tls
+  ingressClassName: nginx
+  rules:
+    - host: hextris.alexandertsvetkov.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: hextris
+              port:
+                number: 8080
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hextris
+  namespace: hextris
+spec:
+  secretName: hextris-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+    rotationPolicy: Always
+  usages:
+    - server auth
+  dnsNames:
+    - "hextris.alexandertsvetkov.com"
+  issuerRef:
+    name: selfsigning-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

@@ -13,7 +13,7 @@ variable "cluster_version" {
 variable "name" {
   type        = string
   description = "Cluster name"
-  default     = "dev_eks"
+  default     = "training_eks"
 }
 
 variable "kubernetes_public_key" {

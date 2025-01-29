@@ -86,13 +86,6 @@ module "eks" {
   eks_managed_node_groups = local.eks_managed_node_groups["common"]
 
   #   cluster_addons = {
-  #     coredns = {
-  #       resolve_conflicts = "OVERWRITE"
-  #     }
-  #     kube-proxy = {}
-  #     vpc-cni = {
-  #       resolve_conflicts = "OVERWRITE"
-  #     }
   #     aws-ebs-csi-driver = {
   #       resolve_conflicts        = "OVERWRITE"
   #       service_account_role_arn = module.aws_ebs_csi_role.iam_role_arn
